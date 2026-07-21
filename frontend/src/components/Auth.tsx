@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import logo from "../assets/img/logo.png";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
@@ -170,10 +170,18 @@ export const Auth: React.FC<AuthProps> = ({ user, onUserUpdate }) => {
       // Guardar el usuario que inició sesión
       localStorage.setItem("babel_duo_user", JSON.stringify(newUser));
 
-      // Iniciar sesión automáticamente
-      onUserUpdate(newUser);
+      // Mostrar mensaje de éxito
+      setSuccessMessage(
+        "Cuenta creada correctamente. Ya puedes iniciar sesión.",
+      );
 
-      setSuccessMessage("Cuenta creada correctamente.");
+      // Limpiar los campos del formulario
+      setDisplayName("");
+      setEmail("");
+      setPassword("");
+
+      // Cambiar al formulario de inicio de sesión
+      setAuthMode("login");
     } catch (err: any) {
       if (err.code === "auth/email-already-in-use") {
         setError("Este correo electrónico ya está registrado.");
